@@ -1,0 +1,23 @@
+1. House Price Prediction (Linear Regression)
+Description: Predict house prices based on features like location (e.g., county or zip code), number of bedrooms, size, etc.
+
+Data Source:
+Central Statistics Office (CSO): The CSO provides a range of housing data, including Residential Property Price Index and Average Price of Residential Dwellings by county.
+
+Daft.ie or MyHome.ie: These are real estate websites with housing listings. I could potentially scrape or manually collect some data on house prices.
+
+
+2. Car Price Prediction (Linear Regression)
+
+Description: Predict the price of used cars based on factors like make, model, year, mileage, and condition.
+
+Data Source:
+DoneDeal.ie or Carzone.ie: Both are popular car marketplaces in Ireland, and have their own predictive model which I know from experience is always approx a 1000e off.
+
+
+3. Life Expectancy Prediction (Linear Regression)
+
+Description: Predict life expectancy based on factors like GDP per capita, literacy rate, healthcare access, etc.
+
+Data Source:
+CSO: They publish health statistics, including life expectancy and public health data.
