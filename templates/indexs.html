@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Prediction</title>
+</head>
+<body>
+    <h1>Upload CSV for Salary Prediction</h1>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <label for="file">Choose CSV File:</label>
+        <input type="file" id="file" name="file"><br><br> 
+
+        <label for="salary_column">Select Salary Column:</label>
+        <select id="salary_column" name="salary_column"></select><br><br>
+
+        <label for="sector_column">Select Sector Column:</label>
+        <select id="sector_column" name="sector_column"></select><br><br>
+
+        <label for="employee_size_column">Select Employee Size Column:</label>
+        <select id="employee_size_column" name="employee_size_column"></select><br><br>
+
+        <label for="employee_size">Select Employee Size Filter:</label>
+        <select id="employee_size" name="employee_size"></select><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        // Script to dynamically populate dropdowns once CSV is uploaded
+        const fileInput = document.getElementById('file');
+        const salaryColumnSelect = document.getElementById('salary_column');
+        const sectorColumnSelect = document.getElementById('sector_column');
+        const employeeSizeColumnSelect = document.getElementById('employee_size_column');
+        const employeeSizeSelect = document.getElementById('employee_size');
+
+        // Wait for an event, save and upload the file
+        fileInput.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch('/columns', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const columns = await response.json();
+
+                // Clear previous options
+                salaryColumnSelect.innerHTML = '';
+                sectorColumnSelect.innerHTML = '';
+                employeeSizeColumnSelect.innerHTML = '';
+
+                // The text and value are directly related (The text is the value)
+                columns.forEach(column => {
+                    const option = new Option(column, column);
+                    salaryColumnSelect.add(option.cloneNode(true));
+                    sectorColumnSelect.add(option.cloneNode(true));//
+                    employeeSizeColumnSelect.add(option.cloneNode(true));
+                });
+
+                // When user selects an employee size column, populate the filter options dynamically
+                employeeSizeColumnSelect.addEventListener('change', async () => {
+                    const selectedColumn = employeeSizeColumnSelect.value;
+                    const employeeSizeResponse = await fetch(`/employee_sizes?column=${selectedColumn}`, {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    const employeeSizes = await employeeSizeResponse.json();
+
+                    // The employee text and value are directly related
+                    employeeSizeSelect.innerHTML = '';  // Clear previous options
+                    employeeSizes.forEach(size => {
+                        const option = new Option(size, size);
+                        employeeSizeSelect.add(option.cloneNode(true));
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

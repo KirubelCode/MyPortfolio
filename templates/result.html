@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Prediction Results</title>
+</head>
+<body>
+    <h1>Salary Prediction Results</h1>
+
+    <p>Mean Squared Error: {{ mse }}</p>
+    <p>R² Score: {{ r2 }}</p>
+
+    <h2>Actual vs Predicted Salary</h2>
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Actual vs Predicted Salary Graph">
+
+    <a href="/">Go Back</a>
+</body>
+</html>
