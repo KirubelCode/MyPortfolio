@@ -27,7 +27,7 @@
     </form>
 
     <script>
-        // Script to dynamically populate dropdowns once CSV is uploaded
+        // Defines variables that will be used to populate the dropdown
         const fileInput = document.getElementById('file');
         const salaryColumnSelect = document.getElementById('salary_column');
         const sectorColumnSelect = document.getElementById('sector_column');
@@ -53,7 +53,7 @@
                 sectorColumnSelect.innerHTML = '';
                 employeeSizeColumnSelect.innerHTML = '';
 
-                // The text and value are directly related (The text is the value)
+                // This add the coloumn to the dropdown, and the text serves as the value
                 columns.forEach(column => {
                     const option = new Option(column, column);
                     salaryColumnSelect.add(option.cloneNode(true));
