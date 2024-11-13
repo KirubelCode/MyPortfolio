@@ -9,9 +9,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
-import matplotlib
-matplotlib.use('Agg')  # Use of the non-interactive backend for generating images
 import matplotlib.pyplot as plt
+from matplotlib.cm import get_cmap
 import io
 import base64
 
@@ -21,107 +20,119 @@ app = Flask(__name__)
 @app.route('/columns', methods=['POST'])
 def columns():
     file = request.files['file']
-    # Load the dataset
+    if not file.filename.endswith('.csv'):
+        return jsonify({'error': 'Only CSV files are allowed'}), 400
     df = pd.read_csv(file)
 
-    # Prepare the coloumns
+    # Prepare the data
     df.columns = df.columns.str.strip()
-    columns = df.columns.tolist()
-
-    # Return the coloumns in a json file
-    return jsonify(columns)
+    return jsonify(df.columns.tolist())
 
 # Route to get unique employee sizes from the selected column
 @app.route('/employee_sizes', methods=['POST'])
 def employee_sizes():
-    # Return the selected value
     column = request.args.get('column')
     file = request.files['file']
+    if not file.filename.endswith('.csv'):
+        return jsonify({'error': 'Only CSV files are allowed'}), 400
     df = pd.read_csv(file)
-    employee_sizes = df[column].unique().tolist()
+    employee_sizes = df[column].dropna().unique().tolist()
     return jsonify(employee_sizes)
-
-
 
 # Main page route
 @app.route('/')
 def index():
     return render_template('indexs.html')
+
+@app.route('/error')
+def error_page():
+    return render_template('error.html', message="An error occurred. Please try again.")
+    
 @app.route('/predict', methods=['POST'])
 def predict():
-    file = request.files['file']
-    df = pd.read_csv(file)
+    try:
+        # Load the uploaded file
+        file = request.files['file']
     
-    # Get user selections
-    salary_column = request.form.get('salary_column')  # Typically 'VALUE'
-    sector_column = request.form.get('sector_column')  # Typically 'Economic Sector'
-    employee_size_column = request.form.get('employee_size_column')  # Typically 'Size of Employees per Enterprise'
-    employee_size = request.form.get('employee_size')
+        # Read the file into a DataFrame
+        df = pd.read_csv(file)
 
-    # Filter dataset by employee size
-    df_filtered = df[df[employee_size_column] == employee_size]
+        # Get user input for required fields
+        salary_column = request.form.get('salary_column')
+        sector_column = request.form.get('sector_column')
 
-    # Handle missing or invalid salary values
-    df_filtered = df_filtered[df_filtered[salary_column] > 0].dropna()
+        # Ensure required fields are provided
+        if not salary_column or not sector_column:
+            return render_template('error.html', message="Salary Column and Sector Column are required.")
 
-    # One-hot encode sector 
-    df_encoded = pd.get_dummies(df_filtered[[sector_column]], drop_first=True)
+        # Optional filtering by employee size
+        employee_size_column = request.form.get('employee_size_column')
+        employee_size = request.form.get('employee_size')
 
+        if employee_size_column and employee_size:
+            df = df[df[employee_size_column] == employee_size]
 
-    # Define (X) as the one-hot encoded sector colum and (y) as salary
-    X = df_encoded
-    y = df_filtered[salary_column]  # Define 'y' as the salary column which will be predicted
+        # Data cleaning/manipulation
+        df[salary_column] = pd.to_numeric(df[salary_column], errors='coerce')
+        df = df[df[salary_column] > 0].dropna()
 
-    # Split data into training and testing sets, and include the sector column
-    X_train, X_test, y_train, y_test, sectors_train, sectors_test = train_test_split(
-        X, y, df_filtered[sector_column], test_size=0.2, random_state=42)
+        # One-hot encoding of the sector column
+        df_encoded = pd.get_dummies(df[[sector_column]], drop_first=True)
 
-    # Train the linear regression model
-    model = LinearRegression()
-    model.fit(X_train, y_train)
+        # Define features and target
+        X = df_encoded
+        y = df[salary_column]
 
-    # Make predictions
-    y_pred = model.predict(X_test)
+        # Split the data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Calculate evaluation metrics
-    mse = mean_squared_error(y_test, y_pred)
-    r2 = r2_score(y_test, y_pred)
+        # Train the linear regression model
+        model = LinearRegression()
+        model.fit(X_train, y_train)
 
-    # Color map for each sector
-    unique_sectors = sectors_test.unique()
-    colors = plt.cm.get_cmap('tab10', len(unique_sectors))
+        # Make predictions
+        y_pred = model.predict(X_test)
 
-    # Create the scatter plot and color-code by sector
-    plt.figure(figsize=(17, 8)) 
+        # Calculate metrics
+        mse = mean_squared_error(y_test, y_pred)
+        r2 = r2_score(y_test, y_pred)
 
-    # Assign different colors for each sector and ensuring each sector is labeled once in the legend
-    for i, sector in enumerate(unique_sectors):
-        sector_filter = sectors_test == sector
-        plt.scatter(y_test[sector_filter], y_pred[sector_filter], color=colors(i), label=sector)
+        # Handle sectors for plotting
+        _, _, _, _, _, sectors_test = train_test_split(
+            X, y, df[sector_column], test_size=0.2, random_state=42
+        )
+        unique_sectors = sectors_test.unique()
+        colors = get_cmap('tab20', len(unique_sectors))
 
-    # Add labels and legend
-    plt.xlabel('Actual Salary')
-    plt.ylabel('Predicted Salary')
-    plt.title('Actual vs Predicted Salary (Linear Regression) with Sectors')
+        # Create the scatter plot
+        plt.figure(figsize=(17, 8))
+        for i, sector in enumerate(unique_sectors):
+            sector_filter = sectors_test == sector
+            plt.scatter(
+                y_test[sector_filter],
+                y_pred[sector_filter],
+                color=colors(i),
+                label=sector
+            )
 
-    #**                             **#
-    # Move the legend outside of the plot and adjust layout to fit everything
-    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), title="Sectors")
-    
-    
-    # Use tight_layout to adjust the figure and make sure everything fits
-    plt.tight_layout(pad=2.0, rect=[0, 0, 0.85, 1])
+        # Add labels and legend
+        plt.xlabel('Actual Salary')
+        plt.ylabel('Predicted Salary')
+        plt.title('Actual vs Predicted Salary (Linear Regression) with Sectors')
+        plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), title="Sectors")
+        plt.tight_layout()
 
-    # Convert plot to PNG image
-    img = io.BytesIO()
-    plt.savefig(img, format='png')
-    img.seek(0)
-    plot_url = base64.b64encode(img.getvalue()).decode()
+        # Convert plot to an image
+        img = io.BytesIO()
+        plt.savefig(img, format='png')
+        img.seek(0)
+        plot_url = base64.b64encode(img.getvalue()).decode()
 
-    #**                             **#
+        return render_template('result.html', mse=mse, r2=r2, plot_url=plot_url)
 
-    return render_template('result.html', mse=mse, r2=r2, plot_url=plot_url)
-
+    except Exception as e:
+        # Redirect to the error page with a generic message
+        return render_template('error.html', message="An error occurred while processing your submission. Please check your data and try again.")
 
 
 if __name__ == '__main__':

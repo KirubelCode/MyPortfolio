@@ -1,83 +1,211 @@
+<!-- 
+# Produced by: Kirubel Temesgen
+# College ID: C00260396
+# Description: To use linear aggression to predict employee salaries
+#              given the business sector and size.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salary Prediction</title>
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+       
+        .title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            color: #555;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+       
+        .form-button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Upload CSV for Salary Prediction</h1>
-    <form action="/predict" method="post" enctype="multipart/form-data">
-        <label for="file">Choose CSV File:</label>
-        <input type="file" id="file" name="file"><br><br> 
+    <div class="container">
+        <h1 class="title">Upload CSV for Salary Prediction</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data" class="form" onsubmit="return validateForm()">
+            <!-- Error message container -->
+            <div id="error-container" class="error-message"></div>
 
-        <label for="salary_column">Select Salary Column:</label>
-        <select id="salary_column" name="salary_column"></select><br><br>
+            <!-- File upload input -->
+            <div class="form-group">
+                <label for="file" class="form-label">Choose CSV File:</label>
+                <input type="file" id="file" name="file" accept=".csv" class="form-input">
+            </div>
 
-        <label for="sector_column">Select Sector Column:</label>
-        <select id="sector_column" name="sector_column"></select><br><br>
+            <!-- Salary column dropdown -->
+            <div class="form-group">
+                <label for="salary_column" class="form-label">Select Salary Column (Required):</label>
+                <select id="salary_column" name="salary_column" class="form-select">
+                    <option value="">Select...</option>
+                </select>
+            </div>
 
-        <label for="employee_size_column">Select Employee Size Column:</label>
-        <select id="employee_size_column" name="employee_size_column"></select><br><br>
+            <!-- Sector column dropdown -->
+            <div class="form-group">
+                <label for="sector_column" class="form-label">Select Sector Column (Required):</label>
+                <select id="sector_column" name="sector_column" class="form-select">
+                    <option value="">Select...</option>
+                </select>
+            </div>
 
-        <label for="employee_size">Select Employee Size Filter:</label>
-        <select id="employee_size" name="employee_size"></select><br><br>
+            <!-- Optional employee size column dropdown -->
+            <div class="form-group">
+                <label for="employee_size_column" class="form-label">Select Employee Size Column (Optional):</label>
+                <select id="employee_size_column" name="employee_size_column" class="form-select">
+                    <option value="">Select...</option>
+                </select>
+            </div>
 
-        <input type="submit" value="Submit">
-    </form>
+            <!-- Optional employee size filter dropdown -->
+            <div class="form-group">
+                <label for="employee_size" class="form-label">Select Employee Size Filter (Optional):</label>
+                <select id="employee_size" name="employee_size" class="form-select">
+                    <option value="">Select...</option>
+                </select>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="form-button">Submit</button>
+        </form>
+    </div>
 
     <script>
-        // Defines variables that will be used to populate the dropdown
         const fileInput = document.getElementById('file');
         const salaryColumnSelect = document.getElementById('salary_column');
         const sectorColumnSelect = document.getElementById('sector_column');
         const employeeSizeColumnSelect = document.getElementById('employee_size_column');
         const employeeSizeSelect = document.getElementById('employee_size');
+        const errorContainer = document.getElementById('error-container');
 
-        // Wait for an event, save and upload the file
+        /**
+         * Validates the form to ensure required fields are selected before submission.
+         */
+        function validateForm() {
+            const salaryColumn = salaryColumnSelect.value;
+            const sectorColumn = sectorColumnSelect.value;
+
+            if (!salaryColumn || !sectorColumn) {
+                errorContainer.textContent = 'Please select both Salary Column and Sector Column.';
+                return false; // Prevent form submission
+            }
+            return true; // Allow submission if valid
+        }
+
+        /**
+         * Listens for file upload and populates dropdowns with column names from the CSV file.
+         */
         fileInput.addEventListener('change', async (event) => {
             const file = event.target.files[0];
             if (file) {
                 const formData = new FormData();
                 formData.append('file', file);
 
-                const response = await fetch('/columns', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                const columns = await response.json();
-
-                // Clear previous options
-                salaryColumnSelect.innerHTML = '';
-                sectorColumnSelect.innerHTML = '';
-                employeeSizeColumnSelect.innerHTML = '';
-
-                // This add the coloumn to the dropdown, and the text serves as the value
-                columns.forEach(column => {
-                    const option = new Option(column, column);
-                    salaryColumnSelect.add(option.cloneNode(true));
-                    sectorColumnSelect.add(option.cloneNode(true));//
-                    employeeSizeColumnSelect.add(option.cloneNode(true));
-                });
-
-                // When user selects an employee size column, populate the filter options dynamically
-                employeeSizeColumnSelect.addEventListener('change', async () => {
-                    const selectedColumn = employeeSizeColumnSelect.value;
-                    const employeeSizeResponse = await fetch(`/employee_sizes?column=${selectedColumn}`, {
+                try {
+                    // Fetch column names from server
+                    const response = await fetch('/columns', {
                         method: 'POST',
                         body: formData,
                     });
 
-                    const employeeSizes = await employeeSizeResponse.json();
+                    const columns = await response.json();
 
-                    // The employee text and value are directly related
-                    employeeSizeSelect.innerHTML = '';  // Clear previous options
-                    employeeSizes.forEach(size => {
-                        const option = new Option(size, size);
-                        employeeSizeSelect.add(option.cloneNode(true));
+                    // Reset dropdown options
+                    salaryColumnSelect.innerHTML = '<option value="">Select...</option>';
+                    sectorColumnSelect.innerHTML = '<option value="">Select...</option>';
+                    employeeSizeColumnSelect.innerHTML = '<option value="">Select...</option>';
+
+                    // Populate dropdowns dynamically
+                    columns.forEach(column => {
+                        const option = new Option(column, column);
+                        salaryColumnSelect.add(option.cloneNode(true));
+                        sectorColumnSelect.add(option.cloneNode(true));
+                        employeeSizeColumnSelect.add(option.cloneNode(true));
                     });
-                });
+
+                    // Populate employee size filter dynamically
+                    employeeSizeColumnSelect.addEventListener('change', async () => {
+                        const selectedColumn = employeeSizeColumnSelect.value;
+                        const employeeSizeResponse = await fetch(`/employee_sizes?column=${selectedColumn}`, {
+                            method: 'POST',
+                            body: formData,
+                        });
+
+                        const employeeSizes = await employeeSizeResponse.json();
+                        employeeSizeSelect.innerHTML = '<option value="">Select...</option>';
+
+                        employeeSizes.forEach(size => {
+                            const option = new Option(size, size);
+                            employeeSizeSelect.add(option.cloneNode(true));
+                        });
+                    });
+                } catch (error) {
+                    errorContainer.textContent = 'An error occurred while processing the file.';
+                }
             }
         });
     </script>
