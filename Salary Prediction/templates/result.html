@@ -61,13 +61,41 @@ body {
         a:hover {
             background-color: #2980b9;
         }
+
+        .results-box {
+    background: #f8f9fa; /* Light gray background */
+    border: 2px solid #007bff; /* Subtle border in blue */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Space inside the box */
+    margin: 20px auto; /* Center the box */
+    max-width: 600px; /* Limit box width */
+    text-align: center; /* Center align content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a soft shadow */
+}
+
+.results-box h1 {
+    font-size: 2rem; /* Large but not overwhelming font size */
+    color: #007bff; /* Blue color for the heading */
+    margin-bottom: 15px; /* Spacing below heading */
+}
+
+.results-box p {
+    font-size: 1.1rem; /* Slightly larger paragraph font */
+    color: #333; /* Neutral dark color */
+    margin: 5px 0; /* Spacing between paragraphs */
+}
+
+
     </style>
 </head>
 <body>
-    <h1>Salary Prediction Results</h1>
-
-    <p><strong>Mean Squared Error:</strong> {{ mse }}</p>
-    <p><strong>R² Score:</strong> {{ r2 }}</p>
+    <div class="results-box">
+        <h1>Salary Prediction Results</h1>
+        <p><strong>Mean Squared Error:</strong> {{ mse }}</p>
+        <p><strong>R² Score:</strong> {{ r2 }}</p>
+        <p>Over 70% R² is deemed a reasonable estimate</p>
+    </div>
+    
 
     <h2>Actual vs Predicted Salary</h2>
     <img src="data:image/png;base64,{{ plot_url }}" alt="Actual vs Predicted Salary Graph">
