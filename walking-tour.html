@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walking Tour Project - Learn More</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+        p {
+            color: #555;
+        }
+        ul {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Walking Tour Project</h1>
+        <h2>Overview</h2>
+        <p>
+            The Walking Tour Project is a Java-based tool designed to create and analyse graphs representing geographical sites.
+            Users can import data via CSV files, where each site is represented as a node, and connections between sites are
+            represented as edges with distances. This tool helps users analyse relationships between sites, such as finding the closest
+            or farthest points, making it invaluable for route planning and decision-making.
+        </p>
+        <h2>Features</h2>
+        <ul>
+            <li>Create graph objects with nodes and edges from CSV file input.</li>
+            <li>Analyse node relationships, including finding closest and farthest sites.</li>
+            <li>Visualise connections using custom classes for nodes and edges.</li>
+            <li>Flexible methods to add nodes, edges, and calculate distances between sites.</li>
+        </ul>
+        <h2>Implementation</h2>
+        <p>
+            The project is implemented in Java, using object-oriented principles for easy extendability:
+        </p>
+        <ul>
+            <li>
+                <strong>Node Class:</strong> Represents each site with attributes such as latitude, longitude, and adjacency lists to
+                store connected nodes and distances.
+            </li>
+            <li>
+                <strong>Edge Class:</strong> Models connections between nodes with source, destination, and distance properties.
+            </li>
+            <li>
+                <strong>Graph Class:</strong> Manages a collection of nodes and edges, with methods to add new nodes, find closest
+                sites, and analyse graph relationships.
+            </li>
+        </ul>
+        <h2>How It Works</h2>
+        <p>
+            After importing a CSV file containing site coordinates, the program creates a graph representation:
+        </p>
+        <ul>
+            <li>Nodes are initialised with site details like name, latitude, and longitude.</li>
+            <li>Edges are created based on connections between nodes, with distances calculated dynamically.</li>
+            <li>Analysis methods find relationships like the closest and second closest nodes, helping users optimise their routes.</li>
+        </ul>
+        <h2>Applications</h2>
+        <ul>
+            <li>Route optimisation for walking tours or delivery services.</li>
+            <li>Geographical analysis for tourism or urban planning.</li>
+            <li>Distance-based decision-making.</li>
+        </ul>
+
+        <br>
+        <h2> Refrences</h2>
+        <p> <li>GeeksforGeeks (2020). Add and Remove Edge in Adjacency List representation of a Graph. [online] GeeksforGeeks. Available at:  https://www.geeksforgeeks.org/add-and-remove-edge-in-adjacency-list-representation-of-a-graph/.</li>‌</p>
+            <p><li>GeeksforGeeks (2024). Java Program to Implement Adjacency List. [online] GeeksforGeeks. Available at: https://www.geeksforgeeks.org/java-program-to-implement-adjacency-list/ [Accessed 25 Nov. 2024].‌</li></p>
+        <br>
+        <div class="button-container">
+            <a href="index.html" class="button">Back to Portfolio</a>
+        </div>
+        
+    </div>
+</body>
+</html>

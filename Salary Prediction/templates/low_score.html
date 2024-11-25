@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low Prediction Score</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #d9534f;
+            font-size: 24px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        ul {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Error Low Prediction Score Detected</h1>
+        <p>Your dataset produced a low R² or no score, which indicates that the model's predictions may not accurately represent the actual values. This could be due to one or more of the following issues:</p>
+        <ul>
+            <li><strong>Incomplete Data:</strong> Some rows in your dataset might have missing or empty values in the salary column or other critical columns.</li>
+            <li><strong>Insufficient Data:</strong> A small dataset might not provide enough information for the model to learn patterns effectively.</li>
+            <li><strong>Unclean Data:</strong> Categorical labels may have inconsistencies (e.g., typos, trailing spaces) that disrupt model training.</li>
+        </ul>
+        <p>Consider the following steps to improve your prediction results:</p>
+        <ul>
+            <li>Ensure the salary column has valid numeric values and is free of empty entries.</li>
+            <li>Select features that are most likely to influence salaries, such as sector or business size.</li>
+            <li>Address inconsistencies in categorical column names (e.g., "Construction (F)" vs. "Construction").</li>
+            <li>Provide a larger and more representative dataset for better model performance.</li>
+
+            <br> <p> CSV Sample data set below </p> 
+            <p> "Statistic Label","Year","County","NACE Rev 2 Economic Sector","UNIT","VALUE"
+                <li>"Median Weekly Earnings","2011","Co. Clare","All NACE economic sectors","Euro","520.52"</li>
+                <li>"Median Weekly Earnings","2011","Co. Cavan","All NACE economic sectors","Euro","495.53"</li>
+                <li>"Median Weekly Earnings","2011","Co. Carlow","All NACE economic sectors","Euro","493.89"</li></p>
+        </ul>
+        <a href="/" class="back-button">Back to Upload</a>
+    </div>
+</body>
+</html>

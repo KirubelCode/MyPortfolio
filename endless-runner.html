@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn More - Endless Runner Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+        p {
+            color: #555;
+        }
+        ul {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Learn More - Endless Runner Game</h1>
+        <p>
+            The Endless Runner Game is a dynamic and engaging project inspired by the mechanics of 
+            <a href="https://www.geometrydash.io/" target="_blank">Geometry Dash</a>. This game was built using x68 assembly language, showcasing a deep understanding of low-level programming concepts.
+        </p>
+
+        <h2>Acknowledgment of Template</h2>
+        <p>
+            This project is built upon a starter template provided by [Philip Bourke] for course [SE603]. The template offered a foundational structure, including trap codes for screen size, key inputs, and double buffering. Modifications were made to expand functionality and transform the basic structure into a complete game experience.
+        </p>
+
+        <h2>Modifications Implemented</h2>
+        <p>
+            Below are the key features and modifications added to create the Endless Runner Game:
+        </p>
+        <ul>
+            <li><strong>Text Display:</strong> Added in-game text updates for difficulty levels, player score, and lives remaining. Displays game over messages and prompts for restart.</li>
+            <li><strong>Sound Integration:</strong> Incorporated sound effects for player actions (jumping, collisions) and game events.</li>
+            <li><strong>Player Mechanics:</strong> Developed player movement mechanics, including constant X-axis movement, jumping, and landing.</li>
+            <li><strong>Game Progression:</strong> Designed a dynamic difficulty system where enemy speed increases based on player score.</li>
+            <li><strong>Game Over and Restart:</strong> Implemented a system where losing 3 lives ends the game, with an option to restart by pressing Enter.</li>
+        </ul>
+
+        <h2>Gameplay Overview</h2>
+        <p>
+            The player controls a character that constantly moves along the X-axis while dodging enemy blocks. The challenge lies in jumping over enemies, with the difficulty increasing as the game progresses. Colliding with an enemy results in a loss of one life, and losing all three lives ends the game. The player can restart the game by pressing Enter.
+        </p>
+
+        <h2>Technical Details</h2>
+        <p>
+            The Endless Runner Game uses x68 assembly language to directly manage system-level operations, including graphics rendering, input handling, and game logic. Trap codes are utilised for:
+        </p>
+        <ul>
+            <li>Screen size information and double buffering.</li>
+            <li>Listening for key inputs (e.g., spacebar for jumping, escape for exiting).</li>
+            <li>Setting cursor positions and displaying text.</li>
+        </ul>
+        <p>
+            Additionally, custom algorithms were implemented for player movement, gravity simulation, enemy speed adjustment, and collision detection.
+        </p>
+
+        <h2>References</h2>
+        <p>
+            While parts of this project were based on the provided template, additional inspiration and technical understanding were drawn from the following:
+        </p>
+        <ul>
+            <li><a href="https://github.com/MossFrog/x68-Assembly-Examples" target="_blank">MossFrog (2016). GitHub - MossFrog/x68-Assembly-Examples: Examples of code for the Motorola 68K Processor family. [online] GitHub. Available at: https://github.com/MossFrog/x68-Assembly-Examples [Accessed 22 Nov. 2022].‌</a></li>
+            <li><a href="https://www.geometrydash.io/" target="_blank">Geometry Dash Gameplay Reference</a></li>
+        </ul>
+
+        <div class="button-container">
+            <a href="index.html" class="button">Back to Portfolio</a>
+        </div>
+    </div>
+
+</body>
+</html>

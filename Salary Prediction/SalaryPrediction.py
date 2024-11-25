@@ -1,7 +1,9 @@
 # Produced by: Kirubel Temesgen
 # College ID: C00260396
+# Date: 10/11/2024
 # Description: To use linear aggression to predict employee salaries
-#              given the business sector and size.
+#              given the business sector and one other user-selected parameter, 
+#              i.e region, business size.
 
 
 from flask import Flask, request, render_template, jsonify
@@ -9,6 +11,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
+import matplotlib
+matplotlib.use('Agg')  # Use a non-interactive backend
 import matplotlib.pyplot as plt
 from matplotlib.cm import get_cmap
 import io
@@ -46,7 +50,7 @@ def index():
 
 @app.route('/error')
 def error_page():
-    return render_template('error.html', message="An error occurred. Please try again.")
+    return render_template('low_score.html', message="An error occurred. Please try again.")
     
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -101,6 +105,12 @@ def predict():
         _, _, _, _, _, sectors_test = train_test_split(
             X, y, df[sector_column], test_size=0.2, random_state=42
         )
+
+
+        # Redirect to low score page if R² is too low
+        if r2 < 0.5:
+            return render_template('low_score.html')
+
         unique_sectors = sectors_test.unique()
         colors = get_cmap('tab20', len(unique_sectors))
 
@@ -132,7 +142,7 @@ def predict():
 
     except Exception as e:
         # Redirect to the error page with a generic message
-        return render_template('error.html', message="An error occurred while processing your submission. Please check your data and try again.")
+        return render_template('low_score.html', message="An error occurred while processing your submission. Please check your data and try again.")
 
 
 if __name__ == '__main__':
