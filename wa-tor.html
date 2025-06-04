@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn More - Wa-Tor Simulation</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f9f9f9; }
+    .container { max-width: 900px; margin: 20px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    h1 { font-size: 28px; color: #333; margin-bottom: 20px; text-align: center; }
+    h2 { color: #007bff; font-size: 22px; margin-bottom: 15px; }
+    p, li { color: #555; margin-bottom: 10px; }
+    ul, ol { margin-left: 20px; margin-bottom: 20px; }
+    .button-container { text-align: center; margin-top: 20px; }
+    .button { display: inline-block; padding: 10px 20px; font-size: 16px; color: white; text-decoration: none; background-color: #007bff; border-radius: 4px; }
+    .button:hover { background-color: #0056b3; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Learn More About the Wa-Tor Simulation</h1>
+
+    <h2>Overview</h2>
+    <p>The Wa-Tor Simulation models a predator-prey ecosystem using a toroidal grid. It features multi-threaded behavior through Go's goroutines and synchronisation tools. Fish and sharks move, breed, and interact based on set rules, making it a real-time demonstration of concurrent programming principles.</p>
+
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Concurrency:</strong> Efficient grid updates with goroutines and sync tools.</li>
+      <li><strong>Configurable:</strong> Set custom values for grid size, creature counts, breeding, and starvation.</li>
+      <li><strong>Toroidal World:</strong> Movement wraps around the grid edges.</li>
+      <li><strong>Benchmarking:</strong> Execution time logs help evaluate concurrency effects.</li>
+    </ul>
+
+    <h2>Installation & Usage</h2>
+    <p><strong>Prerequisites:</strong> Install the latest version of Go.</p>
+    <p>Clone the repository:</p>
+    <code>git clone https://github.com/KirubelCode/WaTor-Project.git</code><br>
+    <code>cd WaTor-Project</code>
+
+    <p>To run with defaults:</p>
+    <code>go run .</code>
+
+    <p>To customise parameters:</p>
+    <code>go run main.go 100 100 3 3 4 100 8</code>
+
+    <p><strong>Parameters:</strong></p>
+    <ul>
+      <li>NumFish: Number of fish</li>
+      <li>NumSharks: Number of sharks</li>
+      <li>FishBreed: Breeding interval for fish</li>
+      <li>SharkBreed: Breeding interval for sharks</li>
+      <li>Starve: Time before sharks die without food</li>
+      <li>GridSize: NxN grid</li>
+      <li>Threads: Number of threads (goroutines)</li>
+    </ul>
+
+    <h2>Technologies Used</h2>
+    <ul>
+      <li>Go (Golang): Core application and concurrency logic</li>
+      <li>sync.WaitGroup: Handles synchronisation of goroutines</li>
+    </ul>
+
+    <h2>Future Improvements</h2>
+    <ul>
+      <li>Introduce new creature types or behavior rules</li>
+      <li>Codebase optimisation and modularisation</li>
+      <li>Add automated and concurrency-focused testing</li>
+    </ul>
+
+    <h2>References</h2>
+    <ul>
+      <li><a href="https://en.wikipedia.org/wiki/Wa-Tor" target="_blank">Wa-Tor - Wikipedia</a></li>
+
+    </ul>
+
+    <div class="button-container">
+      <a href="index.html" class="button">Back to Portfolio</a>
+    </div>
+  </div>
+</body>
+</html>

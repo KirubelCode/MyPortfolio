@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn More - PulsePal</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f9f9f9; }
+    .container { max-width: 900px; margin: 20px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    h1 { font-size: 28px; color: #333; margin-bottom: 20px; text-align: center; }
+    h2 { color: #007bff; font-size: 22px; margin-bottom: 15px; }
+    p, li { color: #555; margin-bottom: 10px; }
+    ul, ol { margin-left: 20px; margin-bottom: 20px; }
+    .button-container { text-align: center; margin-top: 20px; }
+    .button { display: inline-block; padding: 10px 20px; font-size: 16px; color: white; text-decoration: none; background-color: #007bff; border-radius: 4px; }
+    .button:hover { background-color: #0056b3; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Learn More About PulsePal</h1>
+
+    <h2>Overview</h2>
+    <p>PulsePal is an Android fitness app that connects wirelessly to a Movesense wearable sensor to display real-time heart rate, steps, pace, distance, and calorie metrics during exercise sessions. It supports goal setting, post-workout analysis, and cloud sync via a PHP/MySQL backend.</p>
+
+    <h2>Key Features</h2>
+    <ul>
+      <li>Live heart rate, steps, distance, pace, and calorie tracking.</li>
+      <li>Set up to 3 performance goals per session and track progress visually.</li>
+      <li>Post-workout summary with charts and in-session goal evaluation.</li>
+      <li>Reliable background operation.</li>
+      <li>Minimal setup, beginner-friendly design.</li>
+    </ul>
+
+    <h2>Architecture</h2>
+    <ul>
+      <li>Movesense BLE sensor streams data to app using MDS service.</li>
+      <li>SensorDataManager handles RxJava observable streams.</li>
+      <li>Retrofit sends data to a PHP backend every 5 seconds.</li>
+      <li>Session data stored in MySQL and retrieved via REST APIs.</li>
+    </ul>
+
+    <h2>Technology Stack</h2>
+    <ul>
+      <li>Android SDK (Java), MPAndroidChart, Material Components</li>
+      <li>Movesense SDK (MDS), RxJava, Retrofit, Gson</li>
+      <li>Backend: PHP, MySQL (Hostinger shared hosting)</li>
+    </ul>
+
+    <h2>Use Cases</h2>
+    <ul>
+      <li>Start, pause, resume and stop workout sessions.</li>
+      <li>Track and visualise heart rate, calories, pace and distance over time.</li>
+      <li>Store data on cloud for cross-device access and comparison.</li>
+    </ul>
+
+    <h2>Challenges & Lessons</h2>
+    <ul>
+      <li>Improved data accuracy by switching to chest-mounted sensors.</li>
+      <li>Managed BLE concurrency and background session drift.</li>
+      <li>Used SharedPreferences for resilience after crashes or restarts.</li>
+      <li>Reduced data stream frequency to concurrently retrieve the data streams from the sensor.</li>
+    </ul>
+
+    <h2>Bibliography(More in the Project Report)</h2>
+    <ul>
+      <li><a href="https://developer.android.com/develop/connectivity/bluetooth/ble/ble-overview" target="_blank">Bluetooth Low Energy | Android Developers</a></li>
+      <li><a href="https://www.movesense.com/docs/mobile/android/main/" target="_blank">Movesense Android Developer Guide</a></li>
+      <li><a href="https://square.github.io/retrofit/" target="_blank">Retrofit - Square</a></li>
+      <li><a href="https://github.com/PhilJay/MPAndroidChart" target="_blank">MPAndroidChart - GitHub</a></li>
+      <li><a href="https://www.php.net/manual/en/function.password-hash.php" target="_blank">PHP password_hash()</a></li>
+    </ul>
+
+    <div class="button-container">
+      <a href="index.html" class="button">Back to Portfolio</a>
+    </div>
+  </div>
+</body>
+</html>

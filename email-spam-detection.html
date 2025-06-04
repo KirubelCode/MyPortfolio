@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn More - Email Spam Detection</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
+    .container { max-width: 900px; margin: 20px auto; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    h1, h2 { color: #007bff; }
+    p, li { color: #333; margin-bottom: 10px; }
+    ul { margin-left: 20px; }
+    .button-container { text-align: center; margin-top: 30px; }
+    .button { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+    .button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Learn More About the Email Spam Detection Project</h1>
+
+    <h2>Overview</h2>
+    <p>This project explores the development of spam email classifiers using various machine learning models including Naïve Bayes, SVM, K-NN, MLP, and K-Means Clustering. It utilises the Enron Email Dataset and follows the CRISP-DM methodology.</p>
+
+    <h2>Key Features</h2>
+    <ul>
+      <li>Rule-based spam labeling strategy using sender domains and keyword filters.</li>
+      <li>Text preprocessing with TF-IDF vectorization, stopword removal, and bigrams.</li>
+      <li>Comparison of Naïve Bayes, SVM, KNN, and MLP classifiers.</li>
+      <li>Unsupervised K-Means clustering with binary spam classification rules.</li>
+    </ul>
+
+    <h2>Technologies Used</h2>
+    <ul>
+      <li>Python, Pandas, Scikit-learn, Matplotlib</li>
+      <li>ML Models: Naïve Bayes, SVM, k-NN, MLPClassifier, K-Means</li>
+      <li>Text Features: TF-IDF, Bigrams, Regex cleaning</li>
+    </ul>
+
+    <h2>Model Evaluation Highlights</h2>
+    <ul>
+      <li><strong>Naïve Bayes:</strong> 83.91% (improved to 95.53%)</li>
+      <li><strong>SVM:</strong> 89.77% (improved to 96.79%)</li>
+      <li><strong>KNN:</strong> 82.04% (improved to 96.06%)</li>
+      <li><strong>MLP:</strong> Strong accuracy, especially in non-spam detection (Precision: 0.98, Recall: 0.99)</li>
+      <li><strong>K-Means:</strong> Used for pattern discovery and label inference</li>
+    </ul>
+
+    <h2>Future Improvements</h2>
+    <ul>
+      <li>Implement deep learning models (e.g. LSTM, transformers).</li>
+      <li>Use embeddings instead of TF-IDF for richer representations.</li>
+      <li>Use a pre-labeled email dataset.</li>
+    </ul>
+
+    <h2>References</h2>
+    <ul>
+      <li><a href="https://www.geeksforgeeks.org/support-vector-machine-algorithm/" target="_blank">Support Vector Machine - GFG</a></li>
+      <li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html" target="_blank">MLPClassifier - Scikit-learn</a></li>
+      <li><a href="https://www.geeksforgeeks.org/k-means-clustering-introduction/" target="_blank">K-Means Clustering - GFG</a></li>
+      <li><a href="https://www.geeksforgeeks.org/text-preprocessing-for-nlp-tasks/" target="_blank">Text Preprocessing - GFG</a></li>
+      <li><a href="https://github.com/KirubelCode/Email-Spam-Detection-CA1" target="_blank">GitHub Repository - Email Spam Detection</a></li>
+    </ul>
+
+    <div class="button-container">
+      <a href="index.html" class="button">Back to Portfolio</a>
+    </div>
+  </div>
+</body>
+</html>
